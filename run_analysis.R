@@ -1,3 +1,23 @@
+#
+# run_analysis.R - Script for the Getting and Cleaning Data Course Project
+#
+# This script will download the source zip archive and unpack it it is not
+# already present in the current directory.
+#
+# A function is used to load the train and test sub data sets. These sets
+# have the same basic format. The features data is used to name the columns
+# and the activity_id is merged to the activity name factors.
+#
+# The data frames are simply appended. Since the subjects are either test
+# or train, there is no need to actually merge the data.
+#
+# A subset frame of every variable which is a "mean" or "std" is created
+#
+# An aggregated frame of the averages of every variable (even the "std" ones)
+# is created. The frame is aggregated on the 3 variables 
+# subject,activity,setname. This seems like a good idea anyway, avoids
+# needing to merge back the setname and produces the same result as merging
+# on subject and activity alone (since subjects are assigned to either set).
 
 # Constants
 url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
