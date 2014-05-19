@@ -2,17 +2,18 @@
 
 ### Requested data sets
 
-dataMeanAndStd: a tidy data set containing one row for each record in the training and test data sets.
-dataAverages: A tidy data set ontaining one row for each subject and activity
+* dataMeanAndStd: a tidy data set containing one row for each record in the training and test data sets.
+* dataAverages: A tidy data set ontaining one row for each subject and activity
 
-subject	Subject id
+> subject	Subject id
 activity_id Activity id  (1,6)
 activity Activity name: WALKING,WALKING_UPSTAIRS,WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING
 setname Data set: "test" or "train"
 
 The remaining variables are the original dataset names, cleaned up to avoid
 R syntax characters.
-tBodyAcc_mean_X tBodyAcc-mean()-X
+
+> tBodyAcc_mean_X tBodyAcc-mean()-X
 tBodyAcc_mean_Y tBodyAcc-mean()-Y
 tBodyAcc_mean_Z tBodyAcc-mean()-Z
 tBodyAcc_std_X tBodyAcc-std()-X
@@ -103,10 +104,12 @@ angle_Z_gravityMean_ angle(Z,gravityMean)
 
 ### Full data set
 A full dataset is also provided.
-dataFull: a tidy data set containing one row for each record in the training and test data sets.
+
+* dataFull: a tidy data set containing one row for each record in the training and test data sets.
+
 The first 4 columns are the same as the other tidy datasets.
 
-tBodyAcc_mean_X tBodyAcc-mean()-X
+> tBodyAcc_mean_X tBodyAcc-mean()-X
 tBodyAcc_mean_Y tBodyAcc-mean()-Y
 tBodyAcc_mean_Z tBodyAcc-mean()-Z
 tBodyAcc_std_X tBodyAcc-std()-X
