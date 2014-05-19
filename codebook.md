@@ -1,5 +1,7 @@
 ## Codebook
 
+3 data sets are produced. The two requested by the project description and a full dataset with all values.
+
 ### Requested data sets
 
 * dataMeanAndStd: a tidy data set containing one row for each record in the training and test data sets.
@@ -7,7 +9,7 @@
 
 R-column | Description
 ---------|------------
-subject	Subject | id<br>
+subject	| Subject id<br>
 activity_id | Activity id  (1,6)<br>
 activity | Activity name: WALKING,WALKING_UPSTAIRS,WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING<br>
 setname | Data set: "test" or "train"<br>
