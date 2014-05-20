@@ -57,8 +57,15 @@ features$feature =
 	    	sub( '()', '', features$feature_label,fixed=TRUE ))
 	   )
 
+# And a bit more, since I just saw the lecture which says strip '_'
+features$feature = tolower(gsub('_','',features$feature ))
+msfeatures <- features[ grep("mean|std",
+					features$feature,
+					ignore.case=TRUE), ]
+
 # Save the feature names as a template for codebook.md
-# write.table(features[c(3,2)], file="codebook.txt", quote=FALSE,row.names=FALSE )
+# write.table(msfeatures[c(3,2)], file="codebook1.txt", sep='|',quote=FALSE,row.names=FALSE )
+# write.table(features[c(3,2)], file="codebook2.txt", sep='|',quote=FALSE,row.names=FALSE )
 
 
 # Function to load the data for each set.
@@ -81,49 +88,39 @@ loaddata <- function( setname ) {
 	set <- read.table( setfile, col.names=features[,"feature"], header=FALSE )
 
 	# Column bind into a single data frame. Include the setname.
-	df <- cbind ( subjects, activities, setname, set )
+	df <- cbind ( subjects, activities$activity, setname, set )
+	names(df)[2] = "activity"
 	df
 }
 
-# 1. Merge the test and trainig databases
+# 1. Merge the test and training databases
 # Well, just append since they are in the same format and the subjects
 # are independent
 dataFull <- rbind( loaddata("train"), loaddata("test") )
 
 # 2. Extracts only the measurements on the mean and standard deviation
 # for each measurement. 
-meanAndStd <- features$feature[ grep("mean|std",
-					features$feature,
-					ignore.case=TRUE) ]
+#meanAndStd <- features$feature[ grep("mean|std",
+#					features$feature,
+#					ignore.case=TRUE) ]
+meanAndStd <-msfeatures$feature
 
-dataMeanAndStd <- dataFull[,c("subject","activity_id", "activity","setname",
+dataMeanAndStd <- dataFull[,c("subject", "activity","setname",
 			meanAndStd )]
 
 
 # 5. Creates a second, independent tidy data set with the average of each
 # variable for each activity and each subject. 
 
-#first <- function(x) {x[1] }
-#aggregate(x = dataMeanAndStd[,1:4],
-#	  by = list( dataMeanAndStd$subject,dataMeanAndStd$activity_id),
-#	  FUN = first
-#	  )
 dataAverages <-
-    aggregate(x = dataMeanAndStd[,5:(ncol(dataMeanAndStd)-4)],
+    aggregate(x = dataMeanAndStd[,4:(ncol(dataMeanAndStd)-3)],
 	  by = list( dataMeanAndStd$subject,
-	  		dataMeanAndStd$activity_id,
+	  		dataMeanAndStd$activity,
 			dataMeanAndStd$setname),
 	  FUN = mean
 	  )
 # Fix the first 3 column names
-names(dataAverages)[1:3] = c("subject","activity_id","setname")
-# Replace the activity description
-dataAverages <- merge(dataAverages, activity_labels,
-		by.x="activity_id", by.y="activity_id", sort=FALSE )
-# and because I like the original column order
-n <- ncol(dataAverages)
-dataAverages <- dataAverages[, c(2,1, n, 3:(n-1))  ]
-
+names(dataAverages)[1:3] = c("subject","activity","setname")
 
 # Save the output - it can be recovered by read.table(filename)
 write.table( dataFull, file="dataFull.txt" )
